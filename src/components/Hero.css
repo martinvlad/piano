@@ -1,0 +1,59 @@
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .hero-content {
+    z-index: 1; /* Place content above gradient */
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: "Roboto Mono", monospace;
+  }
+  
+  .hero-content p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-family: "Roboto Mono", monospace;
+  }
+  
+  .hero-content .MuiIconButton-root {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .hero-content .MuiIconButton-root:hover {
+    transform: scale(1.1);
+  }
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: "Roboto Mono", monospace;
+    background: linear-gradient(90deg, #ff0000, #00d4ff);
+    background-clip: text;
+    color: transparent;
+    transition: background 0.3s ease;
+  }
+  
+  .hero h1:hover {
+    background: linear-gradient(90deg, #00d4ff, #ff0000);
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
