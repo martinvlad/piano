@@ -10,7 +10,10 @@ import "./Hero.css";
 
 const Hero = () => {
   return (
-    <Box sx={{ width: "100%", overflow: "hidden", position: "relative" }}>
+    <Box
+      id="hero" // Add ID here for scroll targeting
+      sx={{ width: "100%", overflow: "hidden", position: "relative" }}
+    >
       {/* Parallax Background */}
       <Parallax speed={-20}>
         <Box
@@ -19,7 +22,7 @@ const Hero = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "calc(100vh - 64px)",
-            width: "100%", // Ensure it spans full width
+            width: "100%",
           }}
         />
       </Parallax>
@@ -41,9 +44,7 @@ const Hero = () => {
         <Box
           sx={{
             textAlign: "center",
-
             padding: "20px",
-            //background: "rgba(0, 0, 0, 0.4)",
             borderRadius: "10px",
             border: "none",
             boxShadow: "none",

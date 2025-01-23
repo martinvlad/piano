@@ -54,6 +54,7 @@ const Videos = () => {
 
   return (
     <Box
+      id="featured" // Add ID here for scroll targeting
       sx={{ backgroundColor: "#121212", padding: "50px", textAlign: "center" }}
     >
       <Typography
@@ -97,7 +98,6 @@ const Videos = () => {
           sx={{
             overflow: "hidden",
             paddingTop: "20px",
-            // Ensure no overflow
             maxWidth: isMobile
               ? "100%"
               : `${itemsPerPage * (cardWidth + gap)}px`, // Adjust for screen size
@@ -141,15 +141,14 @@ const Videos = () => {
                 />
                 <CardContent
                   sx={{
-                    position: "absolute", // Position relative to the card
-                    bottom: 0, // Pin to the bottom of the card
-                    left: 0, // Start from the left edge
-                    width: "100%", // Ensure it spans the card width only
-                    textAlign: "center", // Center text horizontally
-                    background: "rgba(0, 0, 0, 0.8)", // Semi-transparent background for visibility
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    width: "100%",
+                    textAlign: "center",
+                    background: "rgba(0, 0, 0, 0.8)",
                     color: "white",
-                    padding: "10px 0", // Adjust vertical padding for proper spacing
-                    boxSizing: "border-box", // Include padding in width calculations
+                    padding: "10px 0",
                   }}
                 >
                   <Typography
@@ -160,9 +159,7 @@ const Videos = () => {
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
-                      display: "block", // Ensure block-level behavior for proper centering
-                      margin: 0, // Reset default margins
-                      width: "100%", // Ensure text spans only the card's width
+                      display: "block",
                     }}
                   >
                     {video.title}
