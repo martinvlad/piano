@@ -54,7 +54,7 @@ const Videos = () => {
 
   return (
     <Box
-      sx={{ backgroundColor: "#121212", padding: "20px", textAlign: "center" }}
+      sx={{ backgroundColor: "#121212", padding: "50px", textAlign: "center" }}
     >
       <Typography
         variant="h4"
@@ -95,7 +95,9 @@ const Videos = () => {
         <Box
           className="carousel-container"
           sx={{
-            overflow: "hidden", // Ensure no overflow
+            overflow: "hidden",
+            paddingTop: "20px",
+            // Ensure no overflow
             maxWidth: isMobile
               ? "100%"
               : `${itemsPerPage * (cardWidth + gap)}px`, // Adjust for screen size
