@@ -55,5 +55,14 @@
       transform: translateY(0);
     }
   }
+  @media (max-width: 768px) {
+    .hero h2  {
+      font-size: 1.5rem;
+    }
+  
+    .hero h5 {
+      font-size: 0.9rem;
+    }
+  }
   
   

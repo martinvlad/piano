@@ -6,6 +6,7 @@ import {
   CardContent,
   Typography,
   IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import "./Videos.css";
@@ -34,18 +35,20 @@ const Videos = () => {
   ];
 
   const [startIndex, setStartIndex] = useState(0);
-  const itemsPerPage = 3;
-  const gap = 20;
+  const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screen size
+  const itemsPerPage = isMobile ? 1 : 3; // Show 1 item per slide on mobile, 3 on larger screens
+  const cardWidth = isMobile ? window.innerWidth : 300; // Full width for mobile
+  const gap = isMobile ? 10 : 20; // Smaller gap on mobile
 
   const handleNext = () => {
     if (startIndex + itemsPerPage < videos.length) {
-      setStartIndex(startIndex + itemsPerPage);
+      setStartIndex(startIndex + 1); // Scroll by 1 on both mobile and larger screens
     }
   };
 
   const handlePrev = () => {
-    if (startIndex - itemsPerPage >= 0) {
-      setStartIndex(startIndex - itemsPerPage);
+    if (startIndex > 0) {
+      setStartIndex(startIndex - 1); // Scroll by 1 on both mobile and larger screens
     }
   };
 
@@ -89,11 +92,21 @@ const Videos = () => {
         </IconButton>
 
         {/* Carousel Container */}
-        <Box className="carousel-container">
+        <Box
+          className="carousel-container"
+          sx={{
+            overflow: "hidden", // Ensure no overflow
+            maxWidth: isMobile
+              ? "100%"
+              : `${itemsPerPage * (cardWidth + gap)}px`, // Adjust for screen size
+          }}
+        >
           <Box
             className="carousel-track"
             style={{
-              transform: `translateX(-${startIndex * (300 + gap)}px)`, // Account for card width + gap
+              display: "flex",
+              transition: "transform 0.5s ease", // Smooth transition for slides
+              transform: `translateX(-${startIndex * (cardWidth + gap)}px)`, // Adjust based on card width + gap
             }}
           >
             {videos.map((video, index) => (
@@ -101,11 +114,11 @@ const Videos = () => {
                 key={index}
                 className="video-card"
                 sx={{
-                  position: "relative", // Make card a positioning context
+                  position: "relative",
                   backgroundColor: "rgba(0, 0, 0, 0.7)",
                   borderRadius: "10px",
                   overflow: "hidden",
-                  flex: "0 0 300px",
+                  flex: `0 0 ${cardWidth}px`, // Card width matches screen size
                   margin: `0 ${gap / 2}px`, // Adjust margins to set gap
                   cursor: "pointer",
                   transition: "transform 0.3s ease",
@@ -119,26 +132,22 @@ const Videos = () => {
                   image={video.thumbnail}
                   alt={video.title}
                   sx={{
-                    height: "200px",
-                    objectFit: "cover", // Ensure the image fits properly
+                    width: "100%",
+                    height: "200px", // Set consistent height for all images
+                    objectFit: "cover",
                   }}
                 />
                 <CardContent
                   sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    background: "rgba(0, 0, 0, 0.6)", // Semi-transparent background for text
+                    position: "absolute", // Position relative to the card
+                    bottom: 0, // Pin to the bottom of the card
+                    left: 0, // Start from the left edge
+                    width: "100%", // Ensure it spans the card width only
+                    textAlign: "center", // Center text horizontally
+                    background: "rgba(0, 0, 0, 0.8)", // Semi-transparent background for visibility
                     color: "white",
-                    padding: "10px",
-                    textAlign: "center",
-                    zIndex: 2, // Ensure text stays on top
-                    height: "50px", // Fixed height for consistent alignment
-                    overflow: "hidden", // Prevent text from overflowing
-                    display: "flex",
-                    alignItems: "center", // Center text vertically
-                    justifyContent: "center",
+                    padding: "10px 0", // Adjust vertical padding for proper spacing
+                    boxSizing: "border-box", // Include padding in width calculations
                   }}
                 >
                   <Typography
@@ -146,9 +155,12 @@ const Videos = () => {
                     sx={{
                       fontFamily: "'Roboto Mono', monospace",
                       fontSize: "1rem",
-                      textOverflow: "ellipsis", // Add ellipsis for overflow text
+                      textOverflow: "ellipsis",
                       overflow: "hidden",
-                      whiteSpace: "nowrap", // Prevent text wrapping
+                      whiteSpace: "nowrap",
+                      display: "block", // Ensure block-level behavior for proper centering
+                      margin: 0, // Reset default margins
+                      width: "100%", // Ensure text spans only the card's width
                     }}
                   >
                     {video.title}
