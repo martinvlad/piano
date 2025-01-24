@@ -9,28 +9,24 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-// Import for scroll behavior
 import "./Videos.css";
 
 const Videos = () => {
   const videos = [
-    { thumbnail: "/hero-background.webp", title: "Unravel - Tokyo Ghoul" },
+    { thumbnail: "/hero-background.jpg", title: "Unravel - Tokyo Ghoul" },
     {
-      thumbnail: "/hero-background.webp",
+      thumbnail: "/hero-background.jpg",
       title: "Attack on Titan - Vogel Im Kafig",
     },
+    { thumbnail: "/hero-background.jpg", title: "Naruto - Sadness and Sorrow" },
+    { thumbnail: "/hero-background.jpg", title: "One Piece - Binks' Sake" },
+    { thumbnail: "/hero-background.jpg", title: "Death Note - L's Theme" },
     {
-      thumbnail: "/hero-background.webp",
-      title: "Naruto - Sadness and Sorrow",
-    },
-    { thumbnail: "/hero-background.webp", title: "One Piece - Binks' Sake" },
-    { thumbnail: "/hero-background.webp", title: "Death Note - L's Theme" },
-    {
-      thumbnail: "/hero-background.webp",
+      thumbnail: "/hero-background.jpg",
       title: "Demon Slayer - Kamado Tanjiro's Theme",
     },
     {
-      thumbnail: "/hero-background.webp",
+      thumbnail: "/hero-background.jpg",
       title: "Your Lie in April - Hikaru Nara",
     },
   ];
@@ -41,14 +37,10 @@ const Videos = () => {
   const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screens
   const itemsPerPage = isMobile ? 1 : 3; // Number of items per slide
 
-  // Adjust card width dynamically
-  const cardWidth = containerWidth / itemsPerPage - (isMobile ? 10 : 20); // Account for gap
-  const cardHeight = cardWidth * 0.66; // Maintain aspect ratio (e.g., 3:2)
+  // Dynamically calculate card width
+  const cardWidth = containerWidth / itemsPerPage - (isMobile ? 10 : 20);
+  const cardHeight = cardWidth * 0.66; // Maintain 3:2 aspect ratio
 
-  // Navbar height for scroll offset
-  // Adjust this value based on your navbar height
-
-  // Update container width on window resize
   useEffect(() => {
     const updateContainerWidth = () => {
       const carouselContainer = document.querySelector(".carousel-container");
@@ -57,9 +49,20 @@ const Videos = () => {
       }
     };
 
-    updateContainerWidth();
+    // Initial load and stabilization
+    const timeout = setTimeout(() => {
+      updateContainerWidth();
+      const event = new Event("resize");
+      window.dispatchEvent(event); // Trigger a resize event
+    }, 300);
+
+    // Add resize listener
     window.addEventListener("resize", updateContainerWidth);
-    return () => window.removeEventListener("resize", updateContainerWidth);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("resize", updateContainerWidth);
+    };
   }, []);
 
   const handleNext = () => {
@@ -102,7 +105,7 @@ const Videos = () => {
           gap: isMobile ? 1 : 2,
         }}
       >
-        {/* Material UI Left Button */}
+        {/* Left Button */}
         <IconButton
           onClick={handlePrev}
           disabled={startIndex === 0}
@@ -119,7 +122,7 @@ const Videos = () => {
           <ArrowBack sx={{ fontSize: isMobile ? "20px" : "30px" }} />
         </IconButton>
 
-        {/* Carousel Container */}
+        {/* Carousel */}
         <Box
           className="carousel-container"
           sx={{
@@ -132,6 +135,7 @@ const Videos = () => {
             className="carousel-track"
             style={{
               display: "flex",
+              flexWrap: "nowrap",
               transition: "transform 1.1s ease",
               transform: `translateX(-${
                 startIndex * (cardWidth + (isMobile ? 10 : 20))
@@ -143,23 +147,20 @@ const Videos = () => {
                 key={index}
                 className="video-card"
                 sx={{
+                  flex: "0 0 auto", // Prevent shrinking in mobile view
                   position: "relative",
                   backgroundColor: "rgba(0, 0, 0, 0.7)",
                   borderRadius: "10px",
                   overflow: "hidden",
-                  flex: `0 0 ${cardWidth}px`,
+                  width: `${cardWidth}px`, // Ensure width is calculated dynamically
                   margin: `0 ${isMobile ? 5 : 10}px`,
-                  cursor: "pointer",
-                  transition: "transform 0.3s ease",
-                  ":hover": {
-                    transform: "scale(1.05)",
-                  },
                 }}
               >
                 <CardMedia
                   component="img"
-                  image="/hero-background.webp" // Absolute path from the public folder
-                  alt="Hero Background"
+                  image={video.thumbnail}
+                  alt={video.title}
+                  loading="eager"
                   sx={{
                     width: "100%",
                     height: `${cardHeight}px`,
@@ -196,7 +197,7 @@ const Videos = () => {
           </Box>
         </Box>
 
-        {/* Material UI Right Button */}
+        {/* Right Button */}
         <IconButton
           onClick={handleNext}
           disabled={startIndex + itemsPerPage >= videos.length}
