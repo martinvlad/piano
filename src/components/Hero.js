@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Twitter from "@mui/icons-material/Twitter";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { Parallax } from "react-scroll-parallax";
 import { ReactTyped } from "react-typed";
@@ -143,6 +144,22 @@ const Hero = () => {
               }}
             >
               <ExploreIcon sx={{ fontSize: "30px" }} />
+            </IconButton>
+            <IconButton
+              href="https://x.com/vladlvl90"
+              target="_blank"
+              sx={{
+                color: "white",
+                backgroundColor: "#00D4FF",
+                ":hover": {
+                  backgroundColor: "#00aacc",
+                  transform: "scale(1.2)",
+                  boxShadow: "0px 0px 15px rgba(0, 212, 255, 0.5)",
+                },
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              <Twitter sx={{ fontSize: "30px" }} />
             </IconButton>
           </Box>
         </Box>
