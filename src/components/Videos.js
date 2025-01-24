@@ -132,7 +132,7 @@ const Videos = () => {
             className="carousel-track"
             style={{
               display: "flex",
-              transition: "transform 0.5s ease",
+              transition: "transform 1.1s ease",
               transform: `translateX(-${
                 startIndex * (cardWidth + (isMobile ? 10 : 20))
               }px)`,
