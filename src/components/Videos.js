@@ -158,8 +158,8 @@ const Videos = () => {
               >
                 <CardMedia
                   component="img"
-                  image={video.thumbnail}
-                  alt={video.title}
+                  image="/hero-background.webp" // Absolute path from the public folder
+                  alt="Hero Background"
                   sx={{
                     width: "100%",
                     height: `${cardHeight}px`,
