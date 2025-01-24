@@ -1,76 +1,70 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
 
 const ContactMe = () => {
   return (
     <Box
       id="contact"
       sx={{
-        background: "linear-gradient(90deg, #121212, #1e1e1e)", // Subtle gradient
+        background: "#1a1a1a", // Minimalist dark background
         color: "white",
-        padding: "50px 40px", // More padding
+        padding: "80px 20px", // Consistent padding
         textAlign: "center",
         fontFamily: "'Roboto Mono', monospace",
+        display: "flex", // Flexbox ensures alignment
+        flexDirection: "column",
+        justifyContent: "center", // Center content vertically
+        minHeight: "calc(100vh - 64px)", // Dynamically adjusted height
+        boxSizing: "border-box", // Includes padding in height calculation
       }}
     >
       <Typography
-        variant="h3"
+        variant="h4"
         sx={{
-          marginBottom: "30px",
-          textShadow: "0px 0px 10px rgba(255, 255, 255, 0.8)",
+          marginBottom: "20px",
           fontWeight: "bold",
-          letterSpacing: "3px",
-          fontSize: "2.5rem", // Larger text for emphasis
+          letterSpacing: "2px",
+          fontSize: "2rem", // Balanced heading size
         }}
       >
         Contact Me
       </Typography>
 
-      <Box
+      <Typography
+        variant="body1"
         sx={{
-          maxWidth: "700px",
-          margin: "20px auto",
-          padding: "30px",
-          background: "rgba(0, 0, 0, 0.8)", // Darker background for box
-          borderRadius: "20px", // Smoother corners
-          boxShadow: "0px 0px 30px rgba(255, 255, 255, 0.2)", // Softer shadow
+          fontSize: "1rem",
+          color: "#d1d1d1",
+          marginBottom: "40px",
         }}
       >
-        <Typography
-          variant="body1"
-          sx={{
-            fontSize: "1.3rem",
-            lineHeight: 1.7,
-            marginBottom: "40px",
-            color: "#e0e0e0",
-            textShadow: "0px 0px 5px rgba(255, 255, 255, 0.4)",
-          }}
-        >
-          Have a question, a project in mind, or just want to say hi? Feel free
-          to reach out to me anytime. I'm always happy to connect and discuss
-          new ideas!
-        </Typography>
-        <Button
-          variant="contained"
-          href="mailto:martingvlad@gmail.com"
-          sx={{
-            backgroundColor: "#00d4ff",
-            color: "white",
-            fontSize: "1.2rem",
-            padding: "15px 30px",
-            borderRadius: "30px",
-            textTransform: "none",
-            transition: "all 0.3s ease-in-out", // Smooth animations
-            ":hover": {
-              backgroundColor: "#00aacc",
-              boxShadow: "0px 0px 25px rgba(0, 212, 255, 0.8)",
-              transform: "scale(1.05)", // Scale up on hover
-            },
-          }}
-        >
-          Email Me
-        </Button>
-      </Box>
+        Have a question or a project in mind? Drop me an email!
+      </Typography>
+
+      <Button
+        variant="contained"
+        href="mailto:martingvlad@gmail.com"
+        startIcon={<EmailIcon />} // Email Icon for better UX
+        sx={{
+          backgroundColor: "#00d4ff",
+          color: "white",
+          fontSize: "0.875rem", // Default button font size
+          padding: "8px 16px", // Default button padding
+          borderRadius: "25px", // Rounded button
+          textTransform: "none",
+          width: { xs: "100%", sm: "auto" }, // Full width on mobile, auto for larger screens
+          maxWidth: "300px", // Set a max width for larger screens
+          margin: "0 auto", // Center the button on larger screens
+          transition: "all 0.3s ease-in-out",
+          ":hover": {
+            backgroundColor: "#00aacc",
+            boxShadow: "0px 0px 15px rgba(0, 212, 255, 0.8)",
+          },
+        }}
+      >
+        Email Me
+      </Button>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -9,6 +9,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { Link as ScrollLink } from "react-scroll"; // Import for scroll behavior
 import "./Videos.css";
 
 const Videos = () => {
@@ -35,21 +36,41 @@ const Videos = () => {
   ];
 
   const [startIndex, setStartIndex] = useState(0);
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screen size
-  const itemsPerPage = isMobile ? 1 : 3; // Show 1 item per slide on mobile, 3 on larger screens
-  const cardWidth = isMobile ? 280 : 300; // Adjust width for mobile
-  const cardHeight = isMobile ? 180 : 200; // Adjust height for mobile
-  const gap = isMobile ? 5 : 20; // Reduced gap for mobile
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screens
+  const itemsPerPage = isMobile ? 1 : 3; // Number of items per slide
+
+  // Adjust card width dynamically
+  const cardWidth = containerWidth / itemsPerPage - (isMobile ? 10 : 20); // Account for gap
+  const cardHeight = cardWidth * 0.66; // Maintain aspect ratio (e.g., 3:2)
+
+  // Navbar height for scroll offset
+  const NAVBAR_HEIGHT = 64; // Adjust this value based on your navbar height
+
+  // Update container width on window resize
+  useEffect(() => {
+    const updateContainerWidth = () => {
+      const carouselContainer = document.querySelector(".carousel-container");
+      if (carouselContainer) {
+        setContainerWidth(carouselContainer.offsetWidth);
+      }
+    };
+
+    updateContainerWidth();
+    window.addEventListener("resize", updateContainerWidth);
+    return () => window.removeEventListener("resize", updateContainerWidth);
+  }, []);
 
   const handleNext = () => {
     if (startIndex + itemsPerPage < videos.length) {
-      setStartIndex(startIndex + 1); // Scroll by 1 on both mobile and larger screens
+      setStartIndex(startIndex + itemsPerPage);
     }
   };
 
   const handlePrev = () => {
     if (startIndex > 0) {
-      setStartIndex(startIndex - 1); // Scroll by 1 on both mobile and larger screens
+      setStartIndex(startIndex - itemsPerPage);
     }
   };
 
@@ -58,7 +79,7 @@ const Videos = () => {
       id="featured"
       sx={{
         backgroundColor: "#121212",
-        padding: isMobile ? "30px 30px 70px 30px" : "50px", // Reduced padding on mobile
+        padding: isMobile ? "60px 10px" : "50px",
         textAlign: "center",
       }}
     >
@@ -72,12 +93,13 @@ const Videos = () => {
       >
         Featured Performances
       </Typography>
+
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: isMobile ? 1 : 2, // Reduced gap for mobile
+          gap: isMobile ? 1 : 2,
         }}
       >
         {/* Material UI Left Button */}
@@ -87,8 +109,6 @@ const Videos = () => {
           sx={{
             color: "white",
             backgroundColor: "#00d4ff",
-            fontSize: isMobile ? "small" : "large",
-            padding: isMobile ? "6px" : "10px",
             ":hover": {
               backgroundColor: "#00aacc",
               boxShadow: "0px 0px 10px #00d4ff",
@@ -104,10 +124,8 @@ const Videos = () => {
           className="carousel-container"
           sx={{
             overflow: "hidden",
-            paddingTop: isMobile ? "10px" : "20px", // Adjusted top padding for mobile
-            maxWidth: isMobile
-              ? "100%"
-              : `${itemsPerPage * (cardWidth + gap)}px`, // Adjust for screen size
+            paddingTop: isMobile ? "10px" : "20px",
+            maxWidth: "100%",
           }}
         >
           <Box
@@ -115,7 +133,9 @@ const Videos = () => {
             style={{
               display: "flex",
               transition: "transform 0.5s ease",
-              transform: `translateX(-${startIndex * (cardWidth + gap)}px)`,
+              transform: `translateX(-${
+                startIndex * (cardWidth + (isMobile ? 10 : 20))
+              }px)`,
             }}
           >
             {videos.map((video, index) => (
@@ -128,7 +148,7 @@ const Videos = () => {
                   borderRadius: "10px",
                   overflow: "hidden",
                   flex: `0 0 ${cardWidth}px`,
-                  margin: `0 ${gap / 2}px`,
+                  margin: `0 ${isMobile ? 5 : 10}px`,
                   cursor: "pointer",
                   transition: "transform 0.3s ease",
                   ":hover": {
@@ -143,7 +163,7 @@ const Videos = () => {
                   sx={{
                     width: "100%",
                     height: `${cardHeight}px`,
-                    objectFit: "contain",
+                    objectFit: "cover",
                   }}
                 />
                 <CardContent
@@ -154,7 +174,6 @@ const Videos = () => {
                     background: "rgba(0, 0, 0, 0.8)",
                     color: "white",
                     padding: "10px 0",
-                    marginTop: "-10px",
                   }}
                 >
                   <Typography
@@ -184,8 +203,6 @@ const Videos = () => {
           sx={{
             color: "white",
             backgroundColor: "#00d4ff",
-            fontSize: isMobile ? "small" : "large",
-            padding: isMobile ? "6px" : "10px",
             ":hover": {
               backgroundColor: "#00aacc",
               boxShadow: "0px 0px 10px #00d4ff",

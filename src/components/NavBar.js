@@ -98,7 +98,7 @@ const Navbar = () => {
             to="featured"
             smooth={true}
             duration={5500}
-            offset={-64}
+            offset={-56}
             style={{
               color: "#00d4ff",
               textDecoration: "none",
@@ -113,7 +113,7 @@ const Navbar = () => {
             to="piano-sheets"
             smooth={true}
             duration={500}
-            offset={-64}
+            offset={-56}
             style={{
               color: "#00d4ff",
               textDecoration: "none",
@@ -128,7 +128,7 @@ const Navbar = () => {
             to="contact"
             smooth={true}
             duration={5500}
-            offset={-64}
+            offset={-56}
             style={{
               color: "#00d4ff",
               textDecoration: "none",
@@ -198,7 +198,7 @@ const Navbar = () => {
             to="featured"
             smooth={true}
             duration={5500}
-            offset={-64}
+            offset={-56}
             style={{
               color: "#00d4ff",
               textDecoration: "none",
@@ -214,7 +214,7 @@ const Navbar = () => {
             to="piano-sheets"
             smooth={true}
             duration={500}
-            offset={-64}
+            offset={-56}
             style={{
               color: "#00d4ff",
               textDecoration: "none",
@@ -230,7 +230,7 @@ const Navbar = () => {
             to="contact"
             smooth={true}
             duration={5500}
-            offset={-64}
+            offset={-56}
             style={{
               color: "#00d4ff",
               textDecoration: "none",
