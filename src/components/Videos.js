@@ -12,7 +12,7 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import "./Videos.css";
 
 const Videos = () => {
-  const videos = [
+  const originalVideos = [
     { thumbnail: "/hero-background.jpg", title: "Unravel - Tokyo Ghoul" },
     {
       thumbnail: "/hero-background.jpg",
@@ -30,17 +30,26 @@ const Videos = () => {
       title: "Your Lie in April - Hikaru Nara",
     },
     { thumbnail: "/hero-background.jpg", title: "Bleach - Number One" },
-    { thumbnail: "/hero-background.jpg", title: "Fullmetal Alchemist - Again" },
+    {
+      thumbnail: "/hero-background.jpg",
+      title: "Fullmetal Alchemist - Brotherhood",
+    },
   ];
 
-  const [startIndex, setStartIndex] = useState(0);
+  const clonedVideos = [
+    ...originalVideos.slice(-3), // Last 3 slides
+    ...originalVideos,
+    ...originalVideos.slice(0, 3), // First 3 slides
+  ];
+
+  const [startIndex, setStartIndex] = useState(3); // Start with the real first slide
   const [containerWidth, setContainerWidth] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true); // Track transition state
 
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screens
-  const itemsPerPage = isMobile ? 1 : 3; // Number of items per slide
-
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const itemsPerPage = isMobile ? 1 : 3;
   const cardWidth = containerWidth / itemsPerPage - (isMobile ? 10 : 20);
-  const cardHeight = cardWidth * 0.66; // Maintain 3:2 aspect ratio
+  const cardHeight = cardWidth * 0.66;
 
   useEffect(() => {
     const updateContainerWidth = () => {
@@ -50,37 +59,41 @@ const Videos = () => {
       }
     };
 
-    // Initial load and stabilization
-    const timeout = setTimeout(() => {
-      updateContainerWidth();
-      const event = new Event("resize");
-      window.dispatchEvent(event); // Trigger a resize event
-    }, 300);
-
-    // Add resize listener
+    updateContainerWidth();
     window.addEventListener("resize", updateContainerWidth);
-
-    return () => {
-      clearTimeout(timeout);
-      window.removeEventListener("resize", updateContainerWidth);
-    };
+    return () => window.removeEventListener("resize", updateContainerWidth);
   }, []);
 
-  const handleNext = () => {
-    if (startIndex + itemsPerPage >= videos.length) {
-      setStartIndex(0); // Loop back to the first slide
-    } else {
-      setStartIndex(startIndex + itemsPerPage);
+  useEffect(() => {
+    if (startIndex === clonedVideos.length - itemsPerPage) {
+      // Reached the fake first slide (rightmost fake)
+      setTimeout(() => {
+        setIsTransitioning(false); // Disable transition
+        setStartIndex(itemsPerPage); // Reset to real first slide
+      }, 1100); // Wait for animation
     }
+    if (startIndex === 0) {
+      // Reached the fake last slide (leftmost fake)
+      setTimeout(() => {
+        setIsTransitioning(false); // Disable transition
+        setStartIndex(clonedVideos.length - itemsPerPage * 2); // Reset to real last slide
+      }, 1100); // Wait for animation
+    }
+  }, [startIndex, clonedVideos.length, itemsPerPage]);
+
+  useEffect(() => {
+    if (!isTransitioning) {
+      const timeout = setTimeout(() => setIsTransitioning(true), 50); // Re-enable transition after reset
+      return () => clearTimeout(timeout);
+    }
+  }, [isTransitioning]);
+
+  const handleNext = () => {
+    setStartIndex(startIndex + itemsPerPage);
   };
 
   const handlePrev = () => {
-    if (startIndex === 0) {
-      const lastIndex = Math.max(videos.length - itemsPerPage, 0);
-      setStartIndex(lastIndex); // Loop back to the last slide
-    } else {
-      setStartIndex(startIndex - itemsPerPage);
-    }
+    setStartIndex(startIndex - itemsPerPage);
   };
 
   return (
@@ -140,13 +153,13 @@ const Videos = () => {
             style={{
               display: "flex",
               flexWrap: "nowrap",
-              transition: "transform 1.1s ease",
+              transition: isTransitioning ? "transform 1.1s ease" : "none",
               transform: `translateX(-${
                 startIndex * (cardWidth + (isMobile ? 10 : 20))
               }px)`,
             }}
           >
-            {videos.map((video, index) => (
+            {clonedVideos.map((video, index) => (
               <Card
                 key={index}
                 className="video-card"

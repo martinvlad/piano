@@ -21,7 +21,7 @@ const Hero = () => {
             backgroundImage: `url("/newhero.webp")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            height: "calc(100vh - 64px)",
+            height: "calc(100vh - 56px)", // Correct height adjustment
             width: "100%",
           }}
         />
@@ -34,7 +34,7 @@ const Hero = () => {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%",
+          height: "calc(100vh - 56px)", // Consistent height for content
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

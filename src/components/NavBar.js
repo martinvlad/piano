@@ -61,12 +61,22 @@ const Navbar = () => {
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography
-          variant="h4"
+          variant="h6"
+          component={ScrollLink} // Add ScrollLink here
+          to="hero" // Target the 'hero' section
+          smooth={true}
+          duration={2500}
+          offset={-64} // Adjust for the navbar height
+          style={{ textDecoration: "none" }}
           sx={{
             fontFamily: "'Roboto Mono', serif",
             fontWeight: "bold",
             color: "#00d4ff",
-            letterSpacing: 3,
+            letterSpacing: 2,
+            fontStyle: "italic",
+            cursor: "pointer",
+            textDecoration: "none",
+            // Ensure it doesn't look like a link
           }}
         >
           MARTIN VLAD
