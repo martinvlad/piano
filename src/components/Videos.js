@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Link as ScrollLink } from "react-scroll"; // Import for scroll behavior
+// Import for scroll behavior
 import "./Videos.css";
 
 const Videos = () => {
@@ -46,7 +46,7 @@ const Videos = () => {
   const cardHeight = cardWidth * 0.66; // Maintain aspect ratio (e.g., 3:2)
 
   // Navbar height for scroll offset
-  const NAVBAR_HEIGHT = 64; // Adjust this value based on your navbar height
+  // Adjust this value based on your navbar height
 
   // Update container width on window resize
   useEffect(() => {
