@@ -82,7 +82,7 @@ const Navbar = () => {
           <ScrollLink
             to="hero"
             smooth={true}
-            duration={5500}
+            duration={2500}
             offset={-64}
             style={{
               color: "#00d4ff",
@@ -97,7 +97,7 @@ const Navbar = () => {
           <ScrollLink
             to="featured"
             smooth={true}
-            duration={5500}
+            duration={2500}
             offset={-56}
             style={{
               color: "#00d4ff",
@@ -112,7 +112,7 @@ const Navbar = () => {
           <ScrollLink
             to="piano-sheets"
             smooth={true}
-            duration={500}
+            duration={2500}
             offset={-56}
             style={{
               color: "#00d4ff",
@@ -127,7 +127,7 @@ const Navbar = () => {
           <ScrollLink
             to="contact"
             smooth={true}
-            duration={5500}
+            duration={2500}
             offset={-56}
             style={{
               color: "#00d4ff",
@@ -181,7 +181,7 @@ const Navbar = () => {
           <ScrollLink
             to="hero"
             smooth={true}
-            duration={5500}
+            duration={2500}
             offset={-64}
             style={{
               color: "#00d4ff",
@@ -197,7 +197,7 @@ const Navbar = () => {
           <ScrollLink
             to="featured"
             smooth={true}
-            duration={5500}
+            duration={2500}
             offset={-56}
             style={{
               color: "#00d4ff",
@@ -213,7 +213,7 @@ const Navbar = () => {
           <ScrollLink
             to="piano-sheets"
             smooth={true}
-            duration={500}
+            duration={2500}
             offset={-56}
             style={{
               color: "#00d4ff",
@@ -229,7 +229,7 @@ const Navbar = () => {
           <ScrollLink
             to="contact"
             smooth={true}
-            duration={5500}
+            duration={2500}
             offset={-56}
             style={{
               color: "#00d4ff",
