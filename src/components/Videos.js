@@ -29,6 +29,8 @@ const Videos = () => {
       thumbnail: "/hero-background.jpg",
       title: "Your Lie in April - Hikaru Nara",
     },
+    { thumbnail: "/hero-background.jpg", title: "Bleach - Number One" },
+    { thumbnail: "/hero-background.jpg", title: "Fullmetal Alchemist - Again" },
   ];
 
   const [startIndex, setStartIndex] = useState(0);
@@ -37,7 +39,6 @@ const Videos = () => {
   const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screens
   const itemsPerPage = isMobile ? 1 : 3; // Number of items per slide
 
-  // Dynamically calculate card width
   const cardWidth = containerWidth / itemsPerPage - (isMobile ? 10 : 20);
   const cardHeight = cardWidth * 0.66; // Maintain 3:2 aspect ratio
 
@@ -66,13 +67,18 @@ const Videos = () => {
   }, []);
 
   const handleNext = () => {
-    if (startIndex + itemsPerPage < videos.length) {
+    if (startIndex + itemsPerPage >= videos.length) {
+      setStartIndex(0); // Loop back to the first slide
+    } else {
       setStartIndex(startIndex + itemsPerPage);
     }
   };
 
   const handlePrev = () => {
-    if (startIndex > 0) {
+    if (startIndex === 0) {
+      const lastIndex = Math.max(videos.length - itemsPerPage, 0);
+      setStartIndex(lastIndex); // Loop back to the last slide
+    } else {
       setStartIndex(startIndex - itemsPerPage);
     }
   };
@@ -108,7 +114,6 @@ const Videos = () => {
         {/* Left Button */}
         <IconButton
           onClick={handlePrev}
-          disabled={startIndex === 0}
           sx={{
             color: "white",
             backgroundColor: "#00d4ff",
@@ -116,7 +121,6 @@ const Videos = () => {
               backgroundColor: "#00aacc",
               boxShadow: "0px 0px 10px #00d4ff",
             },
-            ":disabled": { backgroundColor: "gray", color: "white" },
           }}
         >
           <ArrowBack sx={{ fontSize: isMobile ? "20px" : "30px" }} />
@@ -147,12 +151,12 @@ const Videos = () => {
                 key={index}
                 className="video-card"
                 sx={{
-                  flex: "0 0 auto", // Prevent shrinking in mobile view
+                  flex: "0 0 auto",
                   position: "relative",
                   backgroundColor: "rgba(0, 0, 0, 0.7)",
                   borderRadius: "10px",
                   overflow: "hidden",
-                  width: `${cardWidth}px`, // Ensure width is calculated dynamically
+                  width: `${cardWidth}px`,
                   margin: `0 ${isMobile ? 5 : 10}px`,
                 }}
               >
@@ -200,7 +204,6 @@ const Videos = () => {
         {/* Right Button */}
         <IconButton
           onClick={handleNext}
-          disabled={startIndex + itemsPerPage >= videos.length}
           sx={{
             color: "white",
             backgroundColor: "#00d4ff",
@@ -208,7 +211,6 @@ const Videos = () => {
               backgroundColor: "#00aacc",
               boxShadow: "0px 0px 10px #00d4ff",
             },
-            ":disabled": { backgroundColor: "gray", color: "white" },
           }}
         >
           <ArrowForward sx={{ fontSize: isMobile ? "20px" : "30px" }} />
