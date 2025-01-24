@@ -37,8 +37,9 @@ const Videos = () => {
   const [startIndex, setStartIndex] = useState(0);
   const isMobile = useMediaQuery("(max-width: 768px)"); // Check for mobile screen size
   const itemsPerPage = isMobile ? 1 : 3; // Show 1 item per slide on mobile, 3 on larger screens
-  const cardWidth = isMobile ? window.innerWidth : 300; // Full width for mobile
-  const gap = isMobile ? 10 : 20; // Smaller gap on mobile
+  const cardWidth = isMobile ? 280 : 300; // Adjust width for mobile
+  const cardHeight = isMobile ? 180 : 200; // Adjust height for mobile
+  const gap = isMobile ? 5 : 20; // Reduced gap for mobile
 
   const handleNext = () => {
     if (startIndex + itemsPerPage < videos.length) {
@@ -54,8 +55,12 @@ const Videos = () => {
 
   return (
     <Box
-      id="featured" // Add ID here for scroll targeting
-      sx={{ backgroundColor: "#121212", padding: "50px", textAlign: "center" }}
+      id="featured"
+      sx={{
+        backgroundColor: "#121212",
+        padding: isMobile ? "30px 30px 70px 30px" : "50px", // Reduced padding on mobile
+        textAlign: "center",
+      }}
     >
       <Typography
         variant="h4"
@@ -72,7 +77,7 @@ const Videos = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: 2,
+          gap: isMobile ? 1 : 2, // Reduced gap for mobile
         }}
       >
         {/* Material UI Left Button */}
@@ -82,6 +87,8 @@ const Videos = () => {
           sx={{
             color: "white",
             backgroundColor: "#00d4ff",
+            fontSize: isMobile ? "small" : "large",
+            padding: isMobile ? "6px" : "10px",
             ":hover": {
               backgroundColor: "#00aacc",
               boxShadow: "0px 0px 10px #00d4ff",
@@ -89,7 +96,7 @@ const Videos = () => {
             ":disabled": { backgroundColor: "gray", color: "white" },
           }}
         >
-          <ArrowBack />
+          <ArrowBack sx={{ fontSize: isMobile ? "20px" : "30px" }} />
         </IconButton>
 
         {/* Carousel Container */}
@@ -97,7 +104,7 @@ const Videos = () => {
           className="carousel-container"
           sx={{
             overflow: "hidden",
-            paddingTop: "20px",
+            paddingTop: isMobile ? "10px" : "20px", // Adjusted top padding for mobile
             maxWidth: isMobile
               ? "100%"
               : `${itemsPerPage * (cardWidth + gap)}px`, // Adjust for screen size
@@ -107,8 +114,8 @@ const Videos = () => {
             className="carousel-track"
             style={{
               display: "flex",
-              transition: "transform 0.5s ease", // Smooth transition for slides
-              transform: `translateX(-${startIndex * (cardWidth + gap)}px)`, // Adjust based on card width + gap
+              transition: "transform 0.5s ease",
+              transform: `translateX(-${startIndex * (cardWidth + gap)}px)`,
             }}
           >
             {videos.map((video, index) => (
@@ -120,8 +127,8 @@ const Videos = () => {
                   backgroundColor: "rgba(0, 0, 0, 0.7)",
                   borderRadius: "10px",
                   overflow: "hidden",
-                  flex: `0 0 ${cardWidth}px`, // Card width matches screen size
-                  margin: `0 ${gap / 2}px`, // Adjust margins to set gap
+                  flex: `0 0 ${cardWidth}px`,
+                  margin: `0 ${gap / 2}px`,
                   cursor: "pointer",
                   transition: "transform 0.3s ease",
                   ":hover": {
@@ -135,20 +142,19 @@ const Videos = () => {
                   alt={video.title}
                   sx={{
                     width: "100%",
-                    height: "200px", // Set consistent height for all images
-                    objectFit: "cover",
+                    height: `${cardHeight}px`,
+                    objectFit: "contain",
                   }}
                 />
                 <CardContent
                   sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
+                    position: "relative",
                     textAlign: "center",
+                    width: "100%",
                     background: "rgba(0, 0, 0, 0.8)",
                     color: "white",
                     padding: "10px 0",
+                    marginTop: "-10px",
                   }}
                 >
                   <Typography
@@ -160,6 +166,7 @@ const Videos = () => {
                       overflow: "hidden",
                       whiteSpace: "nowrap",
                       display: "block",
+                      margin: 0,
                     }}
                   >
                     {video.title}
@@ -177,6 +184,8 @@ const Videos = () => {
           sx={{
             color: "white",
             backgroundColor: "#00d4ff",
+            fontSize: isMobile ? "small" : "large",
+            padding: isMobile ? "6px" : "10px",
             ":hover": {
               backgroundColor: "#00aacc",
               boxShadow: "0px 0px 10px #00d4ff",
@@ -184,7 +193,7 @@ const Videos = () => {
             ":disabled": { backgroundColor: "gray", color: "white" },
           }}
         >
-          <ArrowForward />
+          <ArrowForward sx={{ fontSize: isMobile ? "20px" : "30px" }} />
         </IconButton>
       </Box>
     </Box>
